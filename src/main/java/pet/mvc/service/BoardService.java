@@ -18,8 +18,8 @@ public interface BoardService {
 	void edit(Board board);
 	void remove(long post_idx);
 	BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage,
-			int startPage, int endPage);
-	BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage);
+			int startPage, int endPage, int member_number);	
+	BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number);
 
 	
 
@@ -45,6 +45,8 @@ public interface BoardService {
 	
 	int rewirteCmt(BoardCmt boardCmt);
 	List<Board> getRecent();
+	BoardListResult getBoardListResultPerMember(int cp, int ps, int board_idx, int countPage, int startPage,
+			int endPage, int member_number);
 	
 
 

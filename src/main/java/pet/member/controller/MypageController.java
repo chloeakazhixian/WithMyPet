@@ -29,6 +29,8 @@ import pet.member.service.MypagePetServiceImpl;
 import pet.member.vo.FollowVO;
 import pet.member.vo.MemberVO;
 import pet.member.vo.MypagePetVO;
+import pet.mvc.board.BoardListResult;
+import pet.mvc.service.BoardService;
 @Log4j
 @Controller
 @RequestMapping(value = "/member")
@@ -42,12 +44,176 @@ public class MypageController {
    private FollowService followservice;
    @Inject
    private BCryptPasswordEncoder pwencoder;
+   @Inject
+   private BoardService boardService;
+
    //회원가입
    @RequestMapping(value = "/mypost.do", method = RequestMethod.GET)
-   public String mypost() throws Exception {
-      logger.info("mypost.do 호출 성공");
-      return "/member/mypost";
-   }
+   public ModelAndView mypost(HttpServletRequest request, HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("login");
+		int member_number = vo.getMember_number();
+		
+		String cpStr = request.getParameter("cp");
+		String psStr = request.getParameter("ps");
+		String countPageStr = request.getParameter("countPage");
+		String startPageStr = request.getParameter("startPage");
+		String endPageStr = request.getParameter("endPage");
+		String catgo = request.getParameter("catgo");
+		String keyword = request.getParameter("keyword");
+		String rnum = request.getParameter("rnum");
+		String boardIdxStr = request.getParameter("board_idx");
+
+		System.out.println("#"+rnum);
+
+		//(1) cp 
+				int cp = 1;
+				if(cpStr == null) {
+					Object cpObj = session.getAttribute("cp");
+					
+					if(cpObj != null) {
+						cp = (Integer)cpObj;
+					}
+				}else {
+					cpStr = cpStr.trim();
+					cp = Integer.parseInt(cpStr);
+				}
+				//session.setAttribute("cp", cp);
+				
+				//(2) ps 
+				int ps = 20;
+				if(psStr == null) {
+					Object psObj = session.getAttribute("ps");
+					if(psObj != null) {
+						ps = (Integer)psObj;
+					}
+				}else {
+					psStr = psStr.trim();
+					int psParam = Integer.parseInt(psStr);
+					
+					Object psObj = session.getAttribute("ps");
+					if(psObj != null) {
+						int psSession = (Integer)psObj;
+						if(psSession != psParam) {
+							cp = 1;
+							session.setAttribute("cp", cp);
+						}
+					}else {
+						if(ps != psParam) {
+							cp = 1;
+							session.setAttribute("cp", cp);
+						}
+					}
+					
+					ps = psParam;
+				}
+				session.setAttribute("ps", ps);
+				
+		//countPage
+		int countPage = 10;
+		if(countPageStr == null) {
+			Object countPageObj = session.getAttribute("countPageStr");
+			if(countPageObj != null) {
+				countPage = (Integer)countPageObj;
+			}
+		}else {
+			countPageStr = countPageStr.trim();
+			countPage = Integer.parseInt(countPageStr);
+		}
+		session.setAttribute("countPage", countPage);
+		
+		//startPage
+		int startPage = ((cp-1) / countPage) * countPage + 1;;
+		if(startPageStr == null) {
+			Object startPageObj = session.getAttribute("startPageStr");
+			if(startPageObj != null) {
+				startPage = (Integer)startPageObj;
+			}
+		}else {
+			startPageStr = startPageStr.trim();
+			startPage = Integer.parseInt(startPageStr);
+		}
+		session.setAttribute("startPage", startPage);
+		
+		//endPage
+		int endPage = startPage + countPage - 1 ;
+		if(endPageStr == null) {
+			Object endPageObj = session.getAttribute("endPageStr");
+			if(endPageObj != null) {
+				endPage = (Integer)endPageObj;
+			}
+		}else {
+			endPageStr = endPageStr.trim();
+			endPage = Integer.parseInt(endPageStr);
+		}
+		session.setAttribute("endPage", endPage);
+		
+	
+		
+		//board_idx
+		int board_idx = 1;
+		if(boardIdxStr == null) {
+			Object boardIdxObj = session.getAttribute("board_idx");
+			if(boardIdxObj != null) {
+				board_idx = (Integer)boardIdxObj;
+			}
+		}else {
+			
+			boardIdxStr = boardIdxStr.trim();
+			board_idx = Integer.parseInt(boardIdxStr);
+		}
+		session.setAttribute("board_idx", board_idx);
+		
+		
+		//member_number
+
+				if(boardIdxStr == null) {
+					Object boardIdxObj = session.getAttribute("board_idx");
+					if(boardIdxObj != null) {
+						board_idx = (Integer)boardIdxObj;
+					}
+				}else {
+					
+					boardIdxStr = boardIdxStr.trim();
+					board_idx = Integer.parseInt(boardIdxStr);
+				}
+				session.setAttribute("board_idx", board_idx);
+		
+		
+		BoardListResult listResult = null;
+		ModelAndView mv = null;
+	
+		
+		
+		if(catgo!=null && keyword !=null) {
+			listResult = boardService.getBoardListResultPerMember(cp, ps, board_idx, countPage, startPage, endPage, member_number);
+			mv = new ModelAndView("board/list", "listResult", listResult);
+			if(listResult.getList().size()==0) {
+				if(cp>1)
+					return new ModelAndView("redirect:mypost.do?&board_idx="+board_idx);
+				
+				else
+					return new ModelAndView("member/mypost", "listResult", null);
+			}
+			return mv;
+			
+		}else {
+			listResult = boardService.getBoardListResultPerMember(cp, ps, board_idx, countPage, startPage, endPage, member_number);
+			mv = new ModelAndView("board/list", "listResult", listResult);
+			if(listResult.getList().size() == 0) {
+				if(cp>1)
+					return new ModelAndView("redirect:mypost.do?&board_idx="+board_idx);
+				
+				else
+					return new ModelAndView("member/mypost", "listResult", null);
+			}else {
+				return mv;
+			
+			
+			
+			}
+		}
+		
+	}
  //마이페이지
    @RequestMapping(value="/mypage.do", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
    public ModelAndView mypage(MemberVO vo, MypagePetVO pvo, HttpSession session,  HttpServletRequest request) throws Exception {

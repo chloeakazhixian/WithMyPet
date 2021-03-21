@@ -12,6 +12,7 @@ import pet.mvc.board.BoardVo;
 public interface BoardMapper {
 	List<Board> selectPerPage(BoardVo boardVo);
 	List<Board> selectByCatgo(BoardVo boardVo);
+	List<Board> selectPerMember(BoardVo boardVo);
 	Board selectBySeq(long post_idx);
 	long selectCount(long board_idx);
 	int selectCountByCatgo(BoardVo boardVo);

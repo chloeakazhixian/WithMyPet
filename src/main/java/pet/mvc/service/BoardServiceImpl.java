@@ -45,17 +45,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
+	public BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
 		long totalCount = boardMapper.selectCount(board_idx);
 		log.info("totalCount@@@@@@"+totalCount);
 		
-		BoardVo boardVo = new BoardVo(null, null, cp, ps, board_idx);
+		BoardVo boardVo = new BoardVo(null, null, cp, ps, board_idx, member_number);
 		log.info("countpage@@@@@"+countPage);
 		countPage = (int) (totalCount/ps);
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerPage(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage);
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage, member_number);
 		log.info("rl@@@@@@@@@"+rl);
 
 		
@@ -63,14 +63,37 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
+	public BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
 		
-		BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx);
+		BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, member_number);
 		long totalCount = boardMapper.selectCountByCatgo(boardVo);
 		List<Board> list = boardMapper.selectByCatgo(boardVo);
 		
-		return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage);
+		return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage, member_number);
 	}
+	
+	@Override
+	public BoardListResult getBoardListResultPerMember(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
+		long totalCount = boardMapper.selectCount(board_idx);
+		int  mnum = member_number;
+		
+		log.info(mnum+"###mnum");
+		
+		
+		BoardVo boardVo = new BoardVo(null, null, cp, ps, board_idx, member_number);
+		log.info("countpage@@@@@"+countPage);
+		countPage = (int) (totalCount/ps);
+		if(totalCount%ps != 0) countPage++;
+		log.info("countpage2@@@@@"+countPage);
+		List<Board> list = boardMapper.selectPerMember(boardVo);
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage, member_number);
+		log.info("rl@@@@@@@@@"+rl);
+
+		
+		return rl;
+	
+	}
+	
 	
 	@Override
 	public Board getBoard(long post_idx) {	

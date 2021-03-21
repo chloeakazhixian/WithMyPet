@@ -59,6 +59,7 @@ public class BoardController {
 	
 	@RequestMapping("list.do")
 	public ModelAndView search(HttpServletRequest request, HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("login");
 		String cpStr = request.getParameter("cp");
 		String psStr = request.getParameter("ps");
 		String countPageStr = request.getParameter("countPage");
@@ -68,6 +69,7 @@ public class BoardController {
 		String keyword = request.getParameter("keyword");
 		String rnum = request.getParameter("rnum");
 		String boardIdxStr = request.getParameter("board_idx");
+		String memberNumberStr = request.getParameter("member_number");
 		System.out.println("#"+rnum);
 
 		//(1) cp 
@@ -169,12 +171,28 @@ public class BoardController {
 		session.setAttribute("board_idx", board_idx);
 		
 		
+		//member_number
+				int member_number = 1;
+				if(boardIdxStr == null) {
+					Object boardIdxObj = session.getAttribute("board_idx");
+					if(boardIdxObj != null) {
+						board_idx = (Integer)boardIdxObj;
+					}
+				}else {
+					
+					boardIdxStr = boardIdxStr.trim();
+					board_idx = Integer.parseInt(boardIdxStr);
+				}
+				session.setAttribute("board_idx", board_idx);
+		
+		
 		BoardListResult listResult = null;
 		ModelAndView mv = null;
 	
 		
+		
 		if(catgo!=null && keyword !=null) {
-			listResult = service.getBoardListResult(catgo, keyword, cp, ps, board_idx, countPage, startPage, endPage);		
+			listResult = service.getBoardListResult(catgo, keyword, cp, ps, board_idx, countPage, startPage, endPage, member_number);		
 			mv = new ModelAndView("board/list", "listResult", listResult);
 			if(listResult.getList().size()==0) {
 				if(cp>1)
@@ -186,7 +204,7 @@ public class BoardController {
 			return mv;
 			
 		}else {
-			listResult = service.getBoardListResult(cp, ps, board_idx, countPage, startPage, endPage);	
+			listResult = service.getBoardListResult(cp, ps, board_idx, countPage, startPage, endPage, member_number);	
 			listResult.setTotalCount(100);
 			mv = new ModelAndView("board/list", "listResult", listResult);
 			if(listResult.getList().size() == 0) {
