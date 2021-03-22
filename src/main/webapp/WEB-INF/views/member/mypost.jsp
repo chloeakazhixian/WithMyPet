@@ -140,11 +140,11 @@
 		<c:when test="${board.post_depth>1}">
 			<c:forEach begin="1" end="${board.post_depth}"><span style='padding-left:10px'></span></c:forEach>
 			<span style='font-size:12px;'>[답변]</span>
-	      <a href="content.do?post_idx=${board.post_idx}&post_order=${board.post_order}">${board.post_subject}</a>
+	      <a href="../board/content.do?post_idx=${board.post_idx}&post_order=${board.post_order}">${board.post_subject}</a>
 		 </c:when>
 		 
 		 <c:otherwise>
-		 	 <a href="content.do?post_idx=${board.post_idx}&member_number=${login.member_number}">${board.post_subject}</a>
+		 	 <a href="../board/content.do?post_idx=${board.post_idx}&member_number=${login.member_number}">${board.post_subject}</a>
 		 </c:otherwise>
 		</c:choose>
 		</TD>
@@ -217,7 +217,7 @@
     </c:when>
   
     <c:otherwise>
-     <a href="list.do?cp=${listResult.cp-(cp%countPage)}">이전</a>
+     <a href="mypost.do?cp=${listResult.cp-(cp%countPage)}">이전</a>
     </c:otherwise>
     </c:choose>	
     
@@ -226,7 +226,7 @@
 
 <c:when test="${listResult.countPage<endPage}">
  <c:forEach begin="${listResult.startPage}" end="${listResult.countPage}" var="i">  
-        <a href="list.do?cp=${i}">
+        <a href="mypost.do?cp=${i}">
    			<c:choose>
    			    <c:when test="${i==listResult.cp}">
                 	<span class="bbs-strong">${i}</span>
@@ -245,7 +245,7 @@
 
 <c:otherwise>
  <c:forEach begin="${listResult.startPage}" end="${listResult.endPage}" var="i">  
-        <a href="list.do?cp=${i}">
+        <a href="mypost.do?cp=${i}">
    			<c:choose>
    			    <c:when test="${i==listResult.cp}">
                 	<span class="bbs-strong">${i}</span>
@@ -262,7 +262,7 @@
 
    
    
-    <c:if test="${listResult.countPage>10}"><a href="list.do?cp=${listResult.cp+((countPage+1)-(cp%countPage))}">다음</a></c:if>
+    <c:if test="${listResult.countPage>10}"><a href="mypost.do?cp=${listResult.cp+((countPage+1)-(cp%countPage))}">다음</a></c:if>
  
 </div>
  
@@ -273,15 +273,6 @@
 <div id="list-menu">
 
 
-<c:choose>
-      <c:when test="${empty login}">
-     <a type="button" class="btn" onclick="writeButton()" style="margin-left:-2.5%;">새 글쓰기</a></button>
-     </c:when>
-     <c:otherwise>
-     <a href="write.do" type="button" class="btn" style="margin-left:-2.5%;">새 글쓰기</a></button>
-     </c:otherwise>
-</c:choose>
-</div>
 
 
 <!--게시판 끝-->

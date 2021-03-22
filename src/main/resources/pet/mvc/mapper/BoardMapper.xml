@@ -54,6 +54,11 @@
 		select count(POST_IDX) from BOARD where board_idx=#{board_idx}
 	</select>
 	
+	<select id="selectMemberCount" resultType="long" parameterType="int">
+		select count(post_idx) from board where member_number=#{member_number}
+	</select>
+	
+	
 	<select id="selectCountByCatgo" resultType="int" parameterType="BoardVo">
 		select count(POST_IDX) from BOARD where ${catgo} like '%'||#{keyword}||'%'
 	</select>	

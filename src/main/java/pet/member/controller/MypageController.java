@@ -122,7 +122,7 @@ public class MypageController {
 		session.setAttribute("countPage", countPage);
 		
 		//startPage
-		int startPage = ((cp-1) / countPage) * countPage + 1;;
+		int startPage = ((cp-1) / countPage) * countPage + 1;	
 		if(startPageStr == null) {
 			Object startPageObj = session.getAttribute("startPageStr");
 			if(startPageObj != null) {
@@ -186,10 +186,10 @@ public class MypageController {
 		
 		if(catgo!=null && keyword !=null) {
 			listResult = boardService.getBoardListResultPerMember(cp, ps, board_idx, countPage, startPage, endPage, member_number);
-			mv = new ModelAndView("board/list", "listResult", listResult);
+			mv = new ModelAndView("member/mypost", "listResult", listResult);
 			if(listResult.getList().size()==0) {
 				if(cp>1)
-					return new ModelAndView("redirect:mypost.do?&board_idx="+board_idx);
+					return new ModelAndView("redirect:mypost.do");
 				
 				else
 					return new ModelAndView("member/mypost", "listResult", null);
@@ -198,10 +198,10 @@ public class MypageController {
 			
 		}else {
 			listResult = boardService.getBoardListResultPerMember(cp, ps, board_idx, countPage, startPage, endPage, member_number);
-			mv = new ModelAndView("board/list", "listResult", listResult);
+			mv = new ModelAndView("member/mypost", "listResult", listResult);
 			if(listResult.getList().size() == 0) {
 				if(cp>1)
-					return new ModelAndView("redirect:mypost.do?&board_idx="+board_idx);
+					return new ModelAndView("redirect:mypost.do");
 				
 				else
 					return new ModelAndView("member/mypost", "listResult", null);

@@ -14,12 +14,14 @@ public interface BoardMapper {
 	List<Board> selectByCatgo(BoardVo boardVo);
 	List<Board> selectPerMember(BoardVo boardVo);
 	Board selectBySeq(long post_idx);
-	long selectCount(long board_idx);
+	long selectCount(long board_iㅡㅛㅔdx);
+	long selectMemberCount(int member_number);
 	int selectCountByCatgo(BoardVo boardVo);
 	void insert(Board board);
 	void delete(long post_idx);
 	void update(Board board);
 	String selectPostTime(long post_idx);
+	
 	
 	
 	int updateHitCount(long post_idx);

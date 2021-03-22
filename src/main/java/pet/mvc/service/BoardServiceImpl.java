@@ -55,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerPage(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage, member_number);
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, member_number);
 		log.info("rl@@@@@@@@@"+rl);
 
 		
@@ -74,7 +74,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public BoardListResult getBoardListResultPerMember(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
-		long totalCount = boardMapper.selectCount(board_idx);
+		long totalCount = boardMapper.selectMemberCount(member_number);
+		log.info("totalCount@@@@@@"+totalCount);
 		int  mnum = member_number;
 		
 		log.info(mnum+"###mnum");
@@ -86,7 +87,7 @@ public class BoardServiceImpl implements BoardService {
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerMember(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage, member_number);
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, member_number);
 		log.info("rl@@@@@@@@@"+rl);
 
 		

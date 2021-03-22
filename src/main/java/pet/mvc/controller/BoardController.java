@@ -53,10 +53,6 @@ public class BoardController {
 	private BoardService service;
 
 	
-	
-	
-	
-	
 	@RequestMapping("list.do")
 	public ModelAndView search(HttpServletRequest request, HttpSession session) {
 		MemberVO vo = (MemberVO) session.getAttribute("login");
@@ -116,7 +112,7 @@ public class BoardController {
 				session.setAttribute("ps", ps);
 				
 		//countPage
-		int countPage = 10;
+		int countPage = 10;//1로 초기화하면 arithmetic exception
 		if(countPageStr == null) {
 			Object countPageObj = session.getAttribute("countPageStr");
 			if(countPageObj != null) {
