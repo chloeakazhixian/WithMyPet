@@ -23,7 +23,7 @@ public class BoardListResult {
 
 
 	
-	public BoardListResult(int cp, long totalCount, int ps, List<Board> list, int countPage, int startPage, int endPage, long board_idx, int member_number) {
+	public BoardListResult(int cp, long totalCount, int ps, List<Board> list, int countPage, int startPage, int endPage, long board_idx) {
 		this.cp = cp;
 		this.totalCount = totalCount;
 		this.ps = ps;
@@ -34,7 +34,7 @@ public class BoardListResult {
 		this.startPage = startPage;
 		this.endPage = endPage;
 		this.board_idx = board_idx;
-		this.member_number = member_number;
+		//this.member_number = member_number;
 
 	}
 	private long calTotalPageCount() {

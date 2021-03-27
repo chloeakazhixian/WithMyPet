@@ -7,6 +7,7 @@ import java.util.List;
 import pet.mvc.board.Board;
 import pet.mvc.board.BoardCmt;
 import pet.mvc.board.BoardLike;
+import pet.mvc.board.Tag;
 import pet.mvc.board.BoardVo;
 
 public interface BoardMapper {
@@ -50,5 +51,9 @@ public interface BoardMapper {
 	List<Board> getRecent();
 	int rewriteCmt(BoardCmt boardCmt);
 	
+	ArrayList<Tag> getTag(long post_idx);
+	
+	void enterTag(Tag tag);
+	Tag enter(Tag tag);
 }
 	

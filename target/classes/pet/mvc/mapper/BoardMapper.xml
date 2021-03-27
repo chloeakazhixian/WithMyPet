@@ -165,13 +165,28 @@
 	
 	</insert>
 	
-		<select id ="getRecent" resultType="Board">
-	<![CDATA[select post_subject, post_idx, content, post_writer from ( select * from board order by post_date desc) where board_idx=3 and rownum<5]]>
+	<select id ="getRecent" resultType="Board">
+		<![CDATA[select post_subject, post_idx, content, post_writer from ( select * from board order by post_date desc) where board_idx=3 and rownum<5]]>
+	</select>
+	
+	<insert id="enterTag" parameterType="Tag">
+		<selectKey keyProperty="post_idx" keyColumn="post_idx" order="BEFORE" resultType="long">
+    		select max(post_idx) from board
+    	</selectKey>
+    	
+		insert into tag(post_idx,  post_tag) values(#{post_idx}, #{post_tag, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id ="getTag" resultType="Tag" parameterType="long">
+		select * from tag where post_idx=#{post_idx}
 	</select>
 	
 	
 	
-	
+	<insert id="enter" parameterType="Tag">
+    	
+		insert into tag(post_idx,  post_tag) values(43, #{post_tag, jdbcType=VARCHAR})
+	</insert>
 	
 
 	</mapper>

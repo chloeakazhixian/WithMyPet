@@ -10,6 +10,7 @@ import pet.mvc.board.Board;
 import pet.mvc.board.BoardCmt;
 import pet.mvc.board.BoardLike;
 import pet.mvc.board.BoardListResult;
+import pet.mvc.board.Tag;
 
 
 public interface BoardService {
@@ -18,8 +19,8 @@ public interface BoardService {
 	void edit(Board board);
 	void remove(long post_idx);
 	BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage,
-			int startPage, int endPage, int member_number);	
-	BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number);
+			int startPage, int endPage);	
+	BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage);
 
 	
 
@@ -47,6 +48,12 @@ public interface BoardService {
 	List<Board> getRecent();
 	BoardListResult getBoardListResultPerMember(int cp, int ps, int board_idx, int countPage, int startPage,
 			int endPage, int member_number);
+	
+	//BoardTag enterTag(BoardTag boardTag);
+	List<Tag> getTag(long post_idx);
+	void writeTag(Tag post_tag);
+	
+
 	
 
 

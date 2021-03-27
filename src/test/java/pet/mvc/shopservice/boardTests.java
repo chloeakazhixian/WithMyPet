@@ -13,15 +13,12 @@ import pet.mvc.mapper.*;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class shopTests {
-		private static final long catgo_code= 9;
-		int cp;
-		int ps;
-		long review_number=6;
+public class boardTests {
+
 		
 		@Autowired
-		//private ProductMapper productMapper;
-		private memberMapper memberMapper;
+
+		private BoardMapper mapper;
 		/*
 		
 		@Test
@@ -67,13 +64,13 @@ public class shopTests {
 			log.info("#list(2): "+ list2);
 		}*/
 	/*
-	 * @Test public void testInsert() { Product product = new Product(-1, "¿À´ÃÀº",
-	 * "12000", "°Ü¿ï¿£ µÎÅùÇÑ Á¶³¢°¡ ÃÖ°í", "#best", null, "g1.jpg", 1, 1);
-	 * productMapper.insert(product); log.info("#productTests insert() ¼öÇà ¿Ï·á"); }
+	 * @Test public void testInsert() { Product product = new Product(-1, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+	 * "12000", "ï¿½Ü¿ï¿£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½", "#best", null, "g1.jpg", 1, 1);
+	 * productMapper.insert(product); log.info("#productTests insert() ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½"); }
 	 */
 	  
 	/*
 	 * @Test public void testDelete() { long seq = 11L; addressMapper.delete(seq);
-	 * log.info("#AddressTests delete() ¼öÇà ¿Ï·á"); }
+	 * log.info("#AddressTests delete() ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½"); }
 	 */
 	}

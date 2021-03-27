@@ -157,7 +157,7 @@
 		 </c:when>
 		 
 		 <c:otherwise>
-		 	 <a href="content.do?post_idx=${board.post_idx}&member_number=${login.member_number}">${board.post_subject}</a>
+		 	 <a href="content.do?post_idx=${board.post_idx}">${board.post_subject}</a>
 		 </c:otherwise>
 		</c:choose>
 		</TD>

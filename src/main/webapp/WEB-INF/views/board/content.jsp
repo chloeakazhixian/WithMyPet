@@ -157,12 +157,29 @@
 
 
 <!-- 컨텐츠시작 -->
-<div class="header">#${board.post_idx}<br>
+<div class="header">#${board.post_idx}&nbsp;&nbsp;<c:forEach items="${board.tag}" var="tag"><div class="tag">${tag.post_tag}</div></c:forEach><br>
 <div class="sub">${board.post_subject}</div>
-<div class="user">${board.post_writer}</div> <div class="date">${board.post_date}</div> <div class="hit">조회 ${board.post_count}</div>
+<div class="user"><div class="memberDetail">${board.post_writer} <div class="dropdown-content">
+  
+<a onclick="viewMember()" style="color: black;">프로필</a>
+<a href="list.do?member_number=${board.member_number}">게시글보기</a>
+<a href="../msg/chat.do?member_number=${board.member_number}">1:1 채팅</a>
+<a href="#">신고</a>
+  </div>
+</div></div>
+
+
+ <div class="date">${board.post_date}</div> <div class="hit">조회 ${board.post_count}</div>
+ 
+<a href="javascript://" id="article-scrap-btn" data-type="scrap" style="margin-top: -111px;margin-left: 91%;position: absolute;color: #6c6c6c;">
+<i class="fa fa-bookmark " data-toggle="tooltip" data-placement="left" title="" data-original-title="스크랩"></i></a>
+
+
 </div>
 
-<div class="cont">${board.content}  
+<div class="cont">
+
+<div class="content">${board.content}</div>  
 
 <div class="drop">
 	<div class="hambergurMenu">
@@ -436,9 +453,26 @@ tryReply.submit();
 </c:otherwise>
 </c:choose>
 
+<div id="viewMember" class="overlay" style="z-index:1;">
+	<div class="popup" style="width: 25%;">
+		<h5>프로필</h5>
+		
+		아이디: ${board.post_writer}
+		이름: ${login.member_name}
+		산책지역: ${login.member_address}
+		가입일: ${login.member_date}
+		
+				
+		
+	</div>
+</div>
 
-
-
+<script>
+ function viewMember(){
+	 window.location.href = "#viewMember";
+ }
+</script>
+ 
 </body>
 
 </html>

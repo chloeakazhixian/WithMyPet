@@ -28,8 +28,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void write(Board board) {
+		
 		boardMapper.insert(board);
 
+//		for(BoardTag tag: boardTag) {
+//			boardMapper.enterTag(tag);
+//			log.info("@@boardTag@@"+boardTag);
+//		}
 	}
 
 	@Override
@@ -45,17 +50,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
+	public BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
 		long totalCount = boardMapper.selectCount(board_idx);
 		log.info("totalCount@@@@@@"+totalCount);
 		
-		BoardVo boardVo = new BoardVo(null, null, cp, ps, board_idx, member_number);
+		BoardVo boardVo = new BoardVo(null, null, cp, ps, board_idx, -1);
 		log.info("countpage@@@@@"+countPage);
 		countPage = (int) (totalCount/ps);
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerPage(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, member_number);
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx);
 		log.info("rl@@@@@@@@@"+rl);
 
 		
@@ -63,13 +68,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
+	public BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
 		
-		BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, member_number);
+		BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, -1);
 		long totalCount = boardMapper.selectCountByCatgo(boardVo);
 		List<Board> list = boardMapper.selectByCatgo(boardVo);
 		
-		return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage, member_number);
+		return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage);
 	}
 	
 	@Override
@@ -87,8 +92,8 @@ public class BoardServiceImpl implements BoardService {
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerMember(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, member_number);
-		log.info("rl@@@@@@@@@"+rl);
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx);
+		log.info("rlmember@@@@@@@@@"+rl);
 
 		
 		return rl;
@@ -102,6 +107,8 @@ public class BoardServiceImpl implements BoardService {
 		Board dto = boardMapper.selectBySeq(post_idx);
 		int like = boardMapper.getLikeCount(post_idx);
 		ArrayList<BoardCmt> comment = boardMapper.selectCmtBySeq(post_idx);
+		ArrayList<Tag> tag = boardMapper.getTag(post_idx);
+		dto.setTag(tag);
 		dto.setComment(comment);	
 		dto.setLike(like);
 		log.info("@@@@@@@@@@@@@@@@@2dto"+dto);
@@ -199,6 +206,31 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getRecent();
 				
 	}
+
+
+
+	@Override
+	public List<Tag> getTag(long post_idx) {
+		return boardMapper.getTag(post_idx);
+	}
+
+	@Override
+	public void writeTag(Tag post_tag) {
+
+		String tagStr = post_tag.getPost_tag();	
+		List<String> list = new ArrayList<String>();
+		String[] splitStr = tagStr.split(",");	
+
+		for(int i=0; i<splitStr.length; i++) {
+			list.add(splitStr[i]);
+			log.info("setPost_tag"+list.get(i));
+			post_tag.setPost_tag(list.get(i));
+			boardMapper.enterTag(post_tag);
+		}	
+
+	}
+
+
 
 
 

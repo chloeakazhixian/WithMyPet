@@ -21,6 +21,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 <!-- include summernote-ko-KR -->
 <script src="../assets/js/summernote-ko-KR.js"></script>
+
 <title>글쓰기</title>
 <Style>
 .go{ width: 90%;margin-left: 5%;margin-top: 5%;}
@@ -100,6 +101,7 @@ function goWrite2(f) {
 	var boardname = f.board_idx.value;
 	
 	
+	
 	if (title.trim() == ''){
 		alert("제목을 입력해주세요");
 		return false;
@@ -119,7 +121,7 @@ function goWrite2(f) {
 	
 	f.action='write.do';
 	f.submit();
-	return true;
+	//return true;
 }
 </script>	
 
@@ -216,6 +218,11 @@ function goWrite2(f) {
 <!-- //header -->
 <br><br><br>
 
+
+
+  		
+  		
+  		
 <div style="width: 60%; margin: auto;">
 	<form name="f" method="post" action="modify.do" class="go" enctype="multipart/form-data" onsubmit='return '>	
 	
@@ -274,17 +281,34 @@ function goWrite2(f) {
 		
 		
 		<!-- <input type="text" name="tagString" placeholder="입력후 스페이스바를 눌러보세요"><br> -->
+	
+  		<input id="tagId" type="text" class="form-control"  placeholder="Tags,"
+		onkeyup="if(window.event.keyCode==13||window.event.keyCode==32||window.event.keyCode==188){(enterValue())}"/>
+		<div id="tag" class="bootstrap-tagsinput">
+		<c:if test="${!empty board.tag}"><c:forEach items="${board.tag}" var="tag">
+		<span class="badge" id="spanId">${tag.post_tag}<span onclick="removeTag()" class="xClass">x</span></span>
+		<input class="form-control" type="hidden" name="post_tag" value="${tag.post_tag}">
+		</c:forEach></c:if>
+		
+		</div><br>
+
+  		
+
+
+  		
+		
+    
 		<br> 
 		<textarea id="summernote" name="content" >${board.content}</textarea>
-		${board.board_name}
+
 		
 		
 		<c:choose>
 		<c:when test="${!empty board.post_subject}">
-		<input id="subBtn" type="button" value="수정" style="float: right;" onclick="goWrite(this.form)"/>
+		<input class="bttn" id="subBtn" type="button" value="수정"  onclick="goWrite(this.form)"/>
 		</c:when>
 		<c:otherwise>
-		<input id="subBtn" type="button" value="등록" style="font-size:12px; float: right; padding: 4px 10px;" onclick="goWrite2(this.form)">
+		<input class="bttn" id="subBtn" type="button" value="등록"  onclick="goWrite2(this.form)">
 		</c:otherwise>
 		</c:choose>
 		
@@ -296,8 +320,108 @@ function goWrite2(f) {
 	
 	</form>
 </div>
+<!-- 배열에 담아서 데이터 넘기기	 -->
 
+<script type="text/javascript">
+	var arr = [];
 
+  		function enterValue(){
+  			
+  			arr.push(${tag.post_tag});
 
+  			
+  			var hiddenTag = document.createElement('input');
+  			hiddenTag.className='form-control';
+  			hiddenTag.setAttribute('type','hidden');
+  			//hiddenTag.setAttribute('value');
+  			hiddenTag.setAttribute('name', 'post_tag'); 
+  			
+  			
+  
+  			var tagSpan = document.createElement('span');
+  			var x = document.createElement('span');	
+  			var xMark = 'x';
+  			var result = document.getElementById('tag');
+  			var input = document.getElementById('tagId');
+  			var string = input.value;
+  			var string2 = string.trim();
+  			var string3 = string2.replace("," , "");
+  			
+  			
+  			
+  			tagSpan.className='badge';
+  			tagSpan.setAttribute( 'id', 'spanId' );
+  			x.setAttribute( 'onclick', 'removeTag("'+string3+'")' );
+  			x.className='xClass';				
+  			x.append(xMark);
+  			
+  			var flag = false;
+  			
+  				if(string3 !== ""){				  
+  	  			arr.push(string3);
+  			}
+  				
+  				 for(var i=0;i<arr.length;i++){
+  	  	  		   for(var j=i+1;j<arr.length;j++){
+  	  	  			   if(arr[i]==arr[j]){
+  	  	  				   flag = true;	
+  	  	  			   }
+  	  	  		   } 
+  	  	  		   
+
+  	  	  		//tagSpan.remove(arr[i]);
+  	  	  		var index = arr.indexOf(string3);
+  	  	  
+  	  	  		   if(flag){
+  	  	  			   console.log('중복있음');
+  	  	  			   arr.splice(i,1);
+  	  	  			   //result.remove(tagSpan);
+  	  	  			   break;
+  	  	  		   }else{
+  	  	  			//result.append(tagSpan);
+  	  	  			tagSpan.append(arr[index]);
+  	  	  			
+  	  	  			break;
+  	  	  			
+  	  	  		   }
+  	  	  	   }
+  				
+  				// if(string3==)
+ 	  			
+  	  	  		tagSpan.append(x);		
+  	  			console.log(arr);
+  	  			console.log(typeof arr);
+  	  			input.value = null;	 	
+  	  			
+  	  		arr2 = arr.toString();
+  	  		
+  	  	result.append(tagSpan);
+  	  		result.append(hiddenTag);
+  	  			input.setAttribute( 'value', arr2 );//삭제시에 밸유 업데이트되게
+  	  			hiddenTag.setAttribute('value', string3);
+  	  			/* arr = JSON.stringify(arr);
+	  			console.log(typeof arr); */
+  	  			
+  	  		}
+  		
+  
+
+  		function removeTag(string3){
+  			var listSpan = document.getElementById("tag");
+  			listSpan.removeChild(listSpan.childNodes[0]);			
+  			var countTag = listSpan.childElementCount;
+  			var index = arr.indexOf(string3);
+
+  			if(countTag!== arr.length){
+  				arr.splice(index,1);
+  				console.log(arr);
+  			}
+  			
+  			
+
+  		}
+  		
+  	
+</script>		 
 </body>
 </html>
