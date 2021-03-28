@@ -22,6 +22,15 @@
 	</select>
 	
 	
+	<select id="selectByTag" resultType="Board" parameterType="BoardVo">
+	<![CDATA[ 
+		select * from (select rownum rnum, aa.* 
+	from (select * from board join tag on board.post_idx=tag.post_idx where ${catgo} like '%'||#{keyword}||'%' order by ${catgo}) aa) 
+	  where rnum>#{startRow} and rnum<=#{endRow}
+	 ]]>
+	</select>
+	
+	
 	
 	<select id="selectPerMember" resultType="Board" parameterType="BoardVo">
 	    <![CDATA[ 
@@ -59,8 +68,12 @@
 	</select>
 	
 	
-	<select id="selectCountByCatgo" resultType="int" parameterType="BoardVo">
-		select count(POST_IDX) from BOARD where ${catgo} like '%'||#{keyword}||'%'
+		<select id="selectCountByCatgo" resultType="int" parameterType="BoardVo">
+			select count(*) from board, tag where ${catgo} like '%'||#{keyword}||'%'
+		<if test="keyword!=null and catgo.equals('post_tag')">
+			and board.post_idx=tag.post_idx
+		</if>
+
 	</select>	
 		
 		
@@ -182,11 +195,13 @@
 	</select>
 	
 	
-	
-	<insert id="enter" parameterType="Tag">
-    	
-		insert into tag(post_idx,  post_tag) values(43, #{post_tag, jdbcType=VARCHAR})
+	<delete id="delTag" parameterType="long">
+		delete from tag where post_idx=#{post_idx}
+	</delete>
+
+	<insert id="editTag" parameterType="Tag">
+		insert into tag(post_idx, post_tag) values(#{post_idx}, #{post_tag})
 	</insert>
-	
+
 
 	</mapper>

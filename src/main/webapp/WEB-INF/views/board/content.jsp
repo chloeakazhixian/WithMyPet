@@ -157,22 +157,21 @@
 
 
 <!-- 컨텐츠시작 -->
-<div class="header">#${board.post_idx}&nbsp;&nbsp;<c:forEach items="${board.tag}" var="tag"><div class="tag">${tag.post_tag}</div></c:forEach><br>
+<div class="header">#${board.post_idx}&nbsp;&nbsp;<c:forEach items="${board.tag}" var="tag"><div class="tagDiv">${tag.post_tag}</div></c:forEach><br>
 <div class="sub">${board.post_subject}</div>
 <div class="user"><div class="memberDetail">${board.post_writer} <div class="dropdown-content">
   
-<a onclick="viewMember()" style="color: black;">프로필</a>
+
 <a href="list.do?member_number=${board.member_number}">게시글보기</a>
 <a href="../msg/chat.do?member_number=${board.member_number}">1:1 채팅</a>
-<a href="#">신고</a>
+
   </div>
 </div></div>
 
 
  <div class="date">${board.post_date}</div> <div class="hit">조회 ${board.post_count}</div>
  
-<a href="javascript://" id="article-scrap-btn" data-type="scrap" style="margin-top: -111px;margin-left: 91%;position: absolute;color: #6c6c6c;">
-<i class="fa fa-bookmark " data-toggle="tooltip" data-placement="left" title="" data-original-title="스크랩"></i></a>
+
 
 
 </div>
@@ -218,9 +217,9 @@ function clickLike(member_name){
 		success: function(result){
 			var htmls= result;
 				$('.like').html(htmls); 
-				/* $('.like-button').on('click', function() {
+				 $('.like-button').on('click', function() {
 					  $('.like-button').toggleClass('liked')
-					}) */
+					}) 
 		},
 		error: function(request, status, error){
 			  alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+ error);
@@ -453,19 +452,7 @@ tryReply.submit();
 </c:otherwise>
 </c:choose>
 
-<div id="viewMember" class="overlay" style="z-index:1;">
-	<div class="popup" style="width: 25%;">
-		<h5>프로필</h5>
-		
-		아이디: ${board.post_writer}
-		이름: ${login.member_name}
-		산책지역: ${login.member_address}
-		가입일: ${login.member_date}
-		
-				
-		
-	</div>
-</div>
+
 
 <script>
  function viewMember(){
@@ -473,6 +460,87 @@ tryReply.submit();
  }
 </script>
  
+ 
+ <!-- footer-28 block -->
+<section class="w3l-footer">
+  <footer class="footer-28">
+    <div class="footer-bg-layer">
+      <div class="container py-lg-3">
+        <div class="row footer-top-28">
+          <div class="col-lg-6 col-md-5 footer-list-28 mt-5">
+            <h6 class="footer-title-28">Contact information</h6>
+            <ul>
+              <li>
+                <p><strong>Address</strong> : Seoul Mapo Baekbumro, South Korea</p>
+              </li>
+              <li>
+                <p><strong>Contact</strong> : <a href="tel:+(12)234-11-24">Click Here</a></p>
+              </li>
+            </ul>
+
+            <div class="main-social-footer-28 mt-3">
+              <ul class="social-icons">
+                <li class="facebook">
+                  <a href="#link" title="Facebook">
+                    <span class="fa fa-facebook" aria-hidden="true"></span>
+                  </a>
+                </li>
+                <li class="twitter">
+                  <a href="#link" title="Twitter">
+                    <span class="fa fa-twitter" aria-hidden="true"></span>
+                  </a>
+                </li>
+                <li class="dribbble">
+                  <a href="#link" title="Dribbble">
+                    <span class="fa fa-dribbble" aria-hidden="true"></span>
+                  </a>
+                </li>
+                <li class="google">
+                  <a href="#link" title="Google">
+                    <span class="fa fa-google" aria-hidden="true"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-7">
+            <div class="row">
+              <div class="col-sm-4 col-6 footer-list-28 mt-5">
+                <h6 class="footer-title-28">Walk Service</h6>
+                <ul>
+                  <li><a href="about.html">Cha Ji Hyun</a></li>
+                  <li><a href="blog.html">Lim Yeon Ji</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-4 col-6 footer-list-28 mt-5">
+                <h6 class="footer-title-28">Shopping Service</h6>
+                <ul>
+                  <li><a href="contact.html">Lee Ok Seok</a></li>
+                  <li><a href="#signup">Sung Jin Hee</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-4 footer-list-28 mt-5">
+                <h6 class="footer-title-28">Member Service</h6>
+                <ul>
+                  <li><a href="#URL">Choi Woo Jae</a></li>
+                  <li><a href="#URL">Lee Su Jin</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="midd-footer-28 align-center py-lg-4 py-3 mt-5">
+        <div class="container">
+          <p class="copy-footer-28 text-center"> © 2021 With My Pet. All Rights Reserved.
+           </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  </section>
 </body>
 
 </html>

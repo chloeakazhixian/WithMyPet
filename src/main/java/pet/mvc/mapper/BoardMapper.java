@@ -14,6 +14,8 @@ public interface BoardMapper {
 	List<Board> selectPerPage(BoardVo boardVo);
 	List<Board> selectByCatgo(BoardVo boardVo);
 	List<Board> selectPerMember(BoardVo boardVo);
+	List<Board> selectByTag(BoardVo boardVo);
+	
 	Board selectBySeq(long post_idx);
 	long selectCount(long board_iㅡㅛㅔdx);
 	long selectMemberCount(int member_number);
@@ -54,6 +56,8 @@ public interface BoardMapper {
 	ArrayList<Tag> getTag(long post_idx);
 	
 	void enterTag(Tag tag);
-	Tag enter(Tag tag);
+
+	void delTag(long post_idx);
+	void editTag(Tag tag);
 }
 	

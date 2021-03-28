@@ -18,6 +18,7 @@ public class BoardVo {
 	private long board_idx; 
 	private int member_number;
 
+
 	
 	
 	{

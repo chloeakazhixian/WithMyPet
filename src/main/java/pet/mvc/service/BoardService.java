@@ -52,6 +52,7 @@ public interface BoardService {
 	//BoardTag enterTag(BoardTag boardTag);
 	List<Tag> getTag(long post_idx);
 	void writeTag(Tag post_tag);
+	void editTag(Tag post_tag);
 	
 
 	

@@ -210,7 +210,7 @@ public class BoardController {
 			return mv;
 		}else {
 			listResult = service.getBoardListResult(cp, ps, board_idx, countPage, startPage, endPage);	
-			listResult.setTotalCount(100);
+			//listResult.setTotalCount(100);
 			mv = new ModelAndView("board/list", "listResult", listResult);
 			if(listResult.getList().size() == 0) {
 				if(cp>1)
@@ -359,8 +359,10 @@ public class BoardController {
 	}
 	
 	@PostMapping("modify.do")
-	public String edit(Board board) {		
+	public String edit(Board board, Tag post_tag) {	
+		log.info("@@edit@"+post_tag);
 		service.edit(board);
+		service.editTag(post_tag);
 		
 		return "redirect:list.do";
 	}
@@ -463,8 +465,8 @@ public class BoardController {
 	
 //	@getMapping("viewPost.do")
 //	public ModelAndView viewPost(Board board) {
-//		service.getBoardListResultPerMember(cp, ps, board_idx, countPage, startPage, endPage, member_number);
-//		
+
+	//		
 //	}
 
 	

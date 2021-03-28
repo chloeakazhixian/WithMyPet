@@ -30,18 +30,16 @@ public class BoardServiceImpl implements BoardService {
 	public void write(Board board) {
 		
 		boardMapper.insert(board);
-
-//		for(BoardTag tag: boardTag) {
-//			boardMapper.enterTag(tag);
-//			log.info("@@boardTag@@"+boardTag);
-//		}
 	}
 
 	@Override
 	public void edit(Board board) {
+		long post_idx = board.getPost_idx();
 		boardMapper.update(board);
-
+		boardMapper.delTag(post_idx);
 	}
+	
+
 
 	@Override
 	public void remove(long post_idx) {
@@ -51,6 +49,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
+		
+
 		long totalCount = boardMapper.selectCount(board_idx);
 		log.info("totalCount@@@@@@"+totalCount);
 		
@@ -61,6 +61,8 @@ public class BoardServiceImpl implements BoardService {
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerPage(boardVo);
 		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx);
+//		ArrayList<Tag> tag = boardMapper.getTag(post_idx);
+//		dto.setTag(tag);
 		log.info("rl@@@@@@@@@"+rl);
 
 		
@@ -68,14 +70,27 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
+	public BoardListResult getBoardListResult(String catgo, String keyword, int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {		
+		if(catgo.equals("post_tag")) {
+			log.info("태그검색");
+			BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, -1);
+			long totalCount = boardMapper.selectCountByCatgo(boardVo);
+			List<Board> tagList = boardMapper.selectByTag(boardVo);
+			
+			return new BoardListResult(cp, totalCount, ps, tagList, board_idx, countPage, startPage, endPage);
+		}
+		else {
+			
+			BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, -1);
+			long totalCount = boardMapper.selectCountByCatgo(boardVo);
+			List<Board> list = boardMapper.selectByCatgo(boardVo);
+			log.info("기타검색");
+			return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage);
+		}
 		
-		BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, -1);
-		long totalCount = boardMapper.selectCountByCatgo(boardVo);
-		List<Board> list = boardMapper.selectByCatgo(boardVo);
 		
-		return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage);
 	}
+	
 	
 	@Override
 	public BoardListResult getBoardListResultPerMember(int cp, int ps, int board_idx, int countPage, int startPage, int endPage, int member_number) {
@@ -228,6 +243,23 @@ public class BoardServiceImpl implements BoardService {
 			boardMapper.enterTag(post_tag);
 		}	
 
+	}
+
+	@Override
+	public void editTag(Tag post_tag) {
+		
+		
+		String tagStr = post_tag.getPost_tag();	
+		log.info("tagStr$$$$"+tagStr);
+		List<String> list = new ArrayList<String>();
+		String[] splitStr = tagStr.split(",");	
+
+		for(int i=0; i<splitStr.length; i++) {
+			list.add(splitStr[i]);
+			log.info("setPost_tag"+list.get(i));
+			post_tag.setPost_tag(list.get(i));
+			boardMapper.editTag(post_tag);
+		}
 	}
 
 
