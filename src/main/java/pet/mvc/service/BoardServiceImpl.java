@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardListResult getBoardListResult(int cp, int ps, int board_idx, int countPage, int startPage, int endPage) {
 		
-
+		
 		long totalCount = boardMapper.selectCount(board_idx);
 		log.info("totalCount@@@@@@"+totalCount);
 		
@@ -60,12 +60,23 @@ public class BoardServiceImpl implements BoardService {
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerPage(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx);
-//		ArrayList<Tag> tag = boardMapper.getTag(post_idx);
-//		dto.setTag(tag);
-		log.info("rl@@@@@@@@@"+rl);
-
 		
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, null);
+		
+		List<List<Tag>> tagsList = new ArrayList<List<Tag>>();
+		ArrayList<Tag> tag = null;
+
+		for(Board board : list) {
+			//long post_idx = board.getPost_idx();
+			tagsList = boardMapper.getTagAll();
+			//log.info("@@tag"+tag);
+			//tagsList.add(list);
+			log.info("@@tglist"+tagsList);
+			
+		}
+		rl.setTagsList(tagsList);		
+		log.info("rl@@@@@@@@@"+rl);
+	
 		return rl;
 	}
 	
@@ -75,9 +86,25 @@ public class BoardServiceImpl implements BoardService {
 			log.info("태그검색");
 			BoardVo boardVo = new BoardVo(catgo, keyword, cp, ps, board_idx, -1);
 			long totalCount = boardMapper.selectCountByCatgo(boardVo);
-			List<Board> tagList = boardMapper.selectByTag(boardVo);
 			
-			return new BoardListResult(cp, totalCount, ps, tagList, board_idx, countPage, startPage, endPage);
+			List<Board> list = boardMapper.selectByTag(boardVo);
+			BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, null);
+			
+			List<List<Tag>> tagsList = new ArrayList<List<Tag>>();
+			ArrayList<Tag> tag = null;
+
+			for(Board board : list) {
+				//long post_idx = board.getPost_idx();
+				tagsList = boardMapper.getTagAll();
+				log.info(tag+"@Dtag");
+				//tagsList.add(tag);
+				log.info("@@@tl"+tagsList);
+				
+			}
+			rl.setTagsList(tagsList);		
+			log.info("rl@@@@@@@@@"+rl);
+		
+			return rl;
 		}
 		else {
 			
@@ -85,7 +112,21 @@ public class BoardServiceImpl implements BoardService {
 			long totalCount = boardMapper.selectCountByCatgo(boardVo);
 			List<Board> list = boardMapper.selectByCatgo(boardVo);
 			log.info("기타검색");
-			return new BoardListResult(cp, totalCount, ps, list, board_idx, countPage, startPage, endPage);
+			BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, null);
+			
+			List<List<Tag>> tagsList = new ArrayList<List<Tag>>();
+			ArrayList<Tag> tag = null;
+
+			for(Board board : list) {
+				long post_idx = board.getPost_idx();
+				tag = boardMapper.getTag(post_idx-1);
+				tagsList.add(tag);
+				
+			}
+			rl.setTagsList(tagsList);		
+			log.info("rl@@@@@@@@@"+rl);
+		
+			return rl;
 		}
 		
 		
@@ -107,10 +148,22 @@ public class BoardServiceImpl implements BoardService {
 		if(totalCount%ps != 0) countPage++;
 		log.info("countpage2@@@@@"+countPage);
 		List<Board> list = boardMapper.selectPerMember(boardVo);
-		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx);
-		log.info("rlmember@@@@@@@@@"+rl);
-
+		BoardListResult rl = new BoardListResult(cp, totalCount, ps, list, countPage, startPage, endPage, board_idx, null);
 		
+		List<List<Tag>> tagsList = new ArrayList<List<Tag>>();
+		ArrayList<Tag> tag = null;
+
+		for(Board board : list) {
+			long post_idx = board.getPost_idx();
+			tag = boardMapper.getTag(post_idx-1);
+			log.info("@@@@tag"+tag);
+			tagsList.add(tag);
+			log.info("@@@@tl"+tagsList);
+			
+		}
+		rl.setTagsList(tagsList);		
+		log.info("rl@@@@@@@@@"+rl);
+	
 		return rl;
 	
 	}

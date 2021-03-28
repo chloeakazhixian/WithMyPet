@@ -159,8 +159,20 @@
 		 </c:when>
 		 
 		 <c:otherwise>
+
 		 	 <a href="content.do?post_idx=${board.post_idx}">${board.post_subject}</a>
-		 	 <c:forEach items="${board.tag}" var="tag"><div class="tagDiv">${tag.post_tag}</div></c:forEach>
+		 	 <c:forEach items="${listResult.tagsList}" var="tl">
+		 	  <c:if test="${tl.post_idx eq board.post_idx}"> 
+					<c:forEach items="${tl.post_tag}" var="tag">
+						<div class="listTag">${tag}</div>
+					
+					</c:forEach>
+			  </c:if>
+			</c:forEach>
+
+
+		 	
+		 	 
 		 </c:otherwise>
 		</c:choose>
 		</TD>
@@ -308,7 +320,7 @@
  
 </div>
  
- 
+
  
 <!-- 페이징 -->
 <br>
@@ -318,7 +330,7 @@
 <c:choose>
       <c:when test="${empty login}">
      <a type="button" class="btn" onclick="writeButton()" style="margin-left:-2.5%;">새 글쓰기</a></button>
-      <c:forEach items="${board.tag}" var="tag"><div class="tagDiv">${tag.post_tag}</div></c:forEach>
+      
      </c:when>
      <c:otherwise>
      <a href="write.do" type="button" class="btn" style="margin-left:-2.5%;">새 글쓰기</a></button>
@@ -385,6 +397,8 @@ function writeButton(){
 
   <script src="../assets/js/bootstrap.min.js"></script>
 <!-- footer-28 block -->
+
+
 <section class="w3l-footer">
   <footer class="footer-28">
     <div class="footer-bg-layer">

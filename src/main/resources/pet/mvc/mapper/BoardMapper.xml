@@ -203,5 +203,8 @@
 		insert into tag(post_idx, post_tag) values(#{post_idx}, #{post_tag})
 	</insert>
 
+	<select id="getTagAll" resultType="Tag">
+		select * from tag
+	</select>
 
 	</mapper>

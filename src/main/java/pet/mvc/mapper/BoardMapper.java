@@ -59,5 +59,6 @@ public interface BoardMapper {
 
 	void delTag(long post_idx);
 	void editTag(Tag tag);
+	List<List<Tag>> getTagAll();
 }
 	
