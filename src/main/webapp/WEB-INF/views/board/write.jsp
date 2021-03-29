@@ -78,7 +78,7 @@ function goWrite(f) {
         		return false;
         	}
         	if (writer.trim() == ''){
-        		alert("작성자를 입력해주세요");
+        		alert("로그인 후 글 작성이 가능합니다.");
         		return false;
         	}
         	if (content.trim() == ''){
@@ -107,7 +107,7 @@ function goWrite2(f) {
 		return false;
 	}
 	if (writer.trim() == ''){
-		alert("작성자를 입력해주세요");
+		alert("로그인 후 글 작성이 가능합니다.");
 		return false;
 	}
 	if (content.trim() == ''){
@@ -221,8 +221,7 @@ function goWrite2(f) {
 
 
   		
-  		
-  		
+
 <div style="width: 60%; margin: auto;">
 	<form name="f" method="post" action="modify.do" class="go" enctype="multipart/form-data" onsubmit='return '>	
 	
@@ -280,23 +279,42 @@ function goWrite2(f) {
 		<input type="text" name="post_subject"  class="form-control" value="${board.post_subject}"/><br>
 		
 		
-		<!-- <input type="text" name="tagString" placeholder="입력후 스페이스바를 눌러보세요"><br> -->
 	
-  		<input id="tagId" type="text" class="form-control"  placeholder="Tags,"
-		onkeyup="if(window.event.keyCode==13||window.event.keyCode==32||window.event.keyCode==188){(enterValue())}"/>
+  		<input id="tagId" type="text" class="form-control js-alert-trigger"  placeholder="태그를 입력하세요"
+		onkeyup="if(window.event.keyCode==13||window.event.keyCode==188){(enterValue())}"/>
+		
+		
+		
+
+
+  
+  
+  
+		
 		<div id="tag" class="bootstrap-tagsinput">
 		<c:if test="${!empty board.tag}"><c:forEach items="${board.tag}" var="tag">
 		<span class="badge" id="spanId">${tag.post_tag}<span onclick="removeTag()" class="xClass">x</span></span>
+	</c:forEach></c:if>
+		
+		</div>
+		
+		
+		<div id ="hiddenTagDiv">
+ 		<c:if test="${!empty board.tag}">
+ 		<c:forEach items="${board.tag}" var="tag">	
 		<input class="form-control" type="hidden" name="post_tag" value="${tag.post_tag}">
-		</c:forEach></c:if>
-		
-		</div><br>
-
+		</c:forEach></c:if> </div>
   		
 
 
   		
-		
+		 		<div class="alert-dismissable-group">
+			  <div class="alert alert-success alert-dismissable js-alert">
+			    <p style="font-size:13px;">
+				        쉼표 혹은 엔터를 입력하여<br>
+				  	태그를 등록 할 수 있습니다.</p>
+			  </div>
+			  </div>
     
 		<br> 
 		<textarea id="summernote" name="content" >${board.content}</textarea>
@@ -319,6 +337,9 @@ function goWrite2(f) {
 
 	
 	</form>
+	  		
+ 
+	
 </div>
 <!-- 배열에 담아서 데이터 넘기기	 -->
 
@@ -327,11 +348,11 @@ function goWrite2(f) {
 
   		function enterValue(){
   			
-  			<c:forEach items="${board.tag}" var="tag">
-  			arr.push("${tag.post_tag}");
-			
-  			</c:forEach>
+  			/* <c:forEach items="${board.tag}" var="tag">
+  			arr.push("${tag.post_tag}");		
+  			</c:forEach> */
   			
+  			//var hiddenSpan = document.createElement('span');
   			var hiddenTag = document.createElement('input');
   			hiddenTag.className='form-control';
   			hiddenTag.setAttribute('type','hidden');
@@ -344,23 +365,24 @@ function goWrite2(f) {
   			var x = document.createElement('span');	
   			var xMark = 'x';
   			var result = document.getElementById('tag');
+  			var hiddenDiv = document.getElementById('hiddenTagDiv');
   			var input = document.getElementById('tagId');
   			var string = input.value;
-  			var string2 = string.trim();
-  			var string3 = string2.replace("," , "");
+  			var string2 = string.replace("," , "");
   			
   			
   			
   			tagSpan.className='badge';
   			tagSpan.setAttribute( 'id', 'spanId' );
-  			x.setAttribute( 'onclick', 'removeTag("'+string3+'")' );
+  			x.setAttribute( 'onclick', 'removeTag("'+string2+'")' );
   			x.className='xClass';				
   			x.append(xMark);
   			
   			var flag = false;
   			
-  				if(string3 !== ""){				  
-  	  			arr.push(string3);
+  				if(string2!=="" && string2!="undefined"){			<!--정상적으로실행-->	  
+  	  			arr.push(string2);
+  	  			
   			}
   				
   				 for(var i=0;i<arr.length;i++){
@@ -372,7 +394,7 @@ function goWrite2(f) {
   	  	  		   
 
   	  	  		//tagSpan.remove(arr[i]);
-  	  	  		var index = arr.indexOf(string3);
+  	  	  		var index = arr.indexOf(string2);
   	  	  
   	  	  		   if(flag){
   	  	  			   console.log('중복있음');
@@ -388,7 +410,7 @@ function goWrite2(f) {
   	  	  		   }
   	  	  	   }
   				
-  				// if(string3==)
+  				// if(string2==)
  	  			
   	  	  		tagSpan.append(x);		
   	  			console.log(arr);
@@ -397,114 +419,96 @@ function goWrite2(f) {
   	  			
   	  		arr2 = arr.toString();
   	  		
-  	  	result.append(tagSpan);
-  	  		result.append(hiddenTag);
+  	  	
+
+  	  		
+  	  		if(string!=""){ 
+  	  			result.append(tagSpan);
+  	  			hiddenDiv.append(hiddenTag);
+  	  		}
   	  			input.setAttribute( 'value', arr2 );//삭제시에 밸유 업데이트되게
-  	  			hiddenTag.setAttribute('value', string3);
-  	  			/* arr = JSON.stringify(arr);
-	  			console.log(typeof arr); */
+  	  			hiddenTag.setAttribute('value', string2);
+
   	  			
   	  		}
   		
   
 
-  		function removeTag(string3){
+  		function removeTag(string2){
   			var listSpan = document.getElementById("tag");
-  			listSpan.removeChild(listSpan.childNodes[0]);			
-  			var countTag = listSpan.childElementCount;
-  			var index = arr.indexOf(string3);
+  			var hiddenDiv = document.getElementById("hiddenTagDiv");					
+  			var index = arr.indexOf(string2);
+  			
 
+  			listSpan.removeChild(listSpan.childNodes[index+1]);<!--정상작동-->
+  			var countTag = listSpan.childElementCount;
   			if(countTag!== arr.length){
   				arr.splice(index,1);
   				console.log(arr);
   			}
+  			hiddenDiv.removeChild(hiddenDiv.childNodes[index+1]);
+
   			
   			
 
   		}
   		
-  	
+
+  		var autoCloseTimeout;
+
+  		$('.js-alert').on('click', '.js-force-close', function(e) {
+  		  $(this).parents('.alert').removeClass('is-shown');
+  		  clearTimeout(autoCloseTimeout);
+  		});
+
+  		// modal example
+  		$('.js-modal-trigger').on('click', function(e) {
+  		  e.preventDefault();
+  		  autoClose({
+  		    target: $('.js-modal'),
+  		    timeout: 2000
+  		  });
+  		});
+
+  		// alert example
+  		$('.js-alert-trigger').on('click', function(e) {
+  		  e.preventDefault();
+  		  autoClose({
+  		    contextual: 'dark',
+  		    target: $('.js-alert'),
+  		    timeout: 2000
+  		  });
+  		});
+
+
+  		function autoClose(options) { // eslint-disable-line
+  		  // set defaults
+  		  const defaults = {
+  		    contextual: 'success',
+  		    timeout: 4000
+  		  };
+  		  // apply options
+  		  const $obj = options.target;
+  		  const contextual = options.contextual || defaults.contextual;
+  		  const timeout = options.timeout || defaults.timeout;
+  		  let type = 'modal';
+
+  		  if ($obj.hasClass('alert')) {
+  		    type = 'alert';
+  		    $obj.removeClass('alert-dark alert-info alert-success alert-warning').addClass('alert-' + contextual);
+  		  }
+
+  		  // trigger modal or show alert
+  		  type === 'modal' ? $obj.modal('show') : $obj.addClass('is-shown');
+
+  		  clearTimeout(autoCloseTimeout); // eslint-disable-line
+
+  		  autoCloseTimeout = setTimeout(function() { // eslint-disable-line
+  		    type === 'modal' ? $obj.modal('hide') : $obj.removeClass('is-shown');
+  		  }, timeout);
+  		}
 </script>
 
-<!-- footer-28 block -->
-<section class="w3l-footer">
-  <footer class="footer-28">
-    <div class="footer-bg-layer">
-      <div class="container py-lg-3">
-        <div class="row footer-top-28">
-          <div class="col-lg-6 col-md-5 footer-list-28 mt-5">
-            <h6 class="footer-title-28">Contact information</h6>
-            <ul>
-              <li>
-                <p><strong>Address</strong> : Seoul Mapo Baekbumro, South Korea</p>
-              </li>
-              <li>
-                <p><strong>Contact</strong> : <a href="tel:+(12)234-11-24">Click Here</a></p>
-              </li>
-            </ul>
 
-            <div class="main-social-footer-28 mt-3">
-              <ul class="social-icons">
-                <li class="facebook">
-                  <a href="#link" title="Facebook">
-                    <span class="fa fa-facebook" aria-hidden="true"></span>
-                  </a>
-                </li>
-                <li class="twitter">
-                  <a href="#link" title="Twitter">
-                    <span class="fa fa-twitter" aria-hidden="true"></span>
-                  </a>
-                </li>
-                <li class="dribbble">
-                  <a href="#link" title="Dribbble">
-                    <span class="fa fa-dribbble" aria-hidden="true"></span>
-                  </a>
-                </li>
-                <li class="google">
-                  <a href="#link" title="Google">
-                    <span class="fa fa-google" aria-hidden="true"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-7">
-            <div class="row">
-              <div class="col-sm-4 col-6 footer-list-28 mt-5">
-                <h6 class="footer-title-28">Walk Service</h6>
-                <ul>
-                  <li><a href="about.html">Cha Ji Hyun</a></li>
-                  <li><a href="blog.html">Lim Yeon Ji</a></li>
-                </ul>
-              </div>
-              <div class="col-sm-4 col-6 footer-list-28 mt-5">
-                <h6 class="footer-title-28">Shopping Service</h6>
-                <ul>
-                  <li><a href="contact.html">Lee Ok Seok</a></li>
-                  <li><a href="#signup">Sung Jin Hee</a></li>
-                </ul>
-              </div>
-              <div class="col-sm-4 footer-list-28 mt-5">
-                <h6 class="footer-title-28">Member Service</h6>
-                <ul>
-                  <li><a href="#URL">Choi Woo Jae</a></li>
-                  <li><a href="#URL">Lee Su Jin</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="midd-footer-28 align-center py-lg-4 py-3 mt-5">
-        <div class="container">
-          <p class="copy-footer-28 text-center"> © 2021 With My Pet. All Rights Reserved.
-           </p>
-        </div>
-      </div>
-    </div>
-  </footer>
-  </section>		 
 </body>
 </html>

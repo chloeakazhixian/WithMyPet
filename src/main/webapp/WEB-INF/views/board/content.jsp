@@ -292,7 +292,7 @@ function replyButton(comment_idx, cmt_writer, index, cmt_date){
 	
 	htmls += '<form id="editReply">';
  	htmls += '<div class="replyfirstsec" id="editId">';
-	htmls += '<div class="replywriter" id="writerId">'+cmtWriter+'님 댓글 수정 중</div><input type="hidden" value='+cmtIdx+' name="comment_idx"/><br></div>';
+	htmls += '<div class="replywriter" id="writerId">'+cmtWriter+'님의 답변(수정중)</div><input type="hidden" value='+cmtIdx+' name="comment_idx"/><br></div>';
 	htmls += '<div class="replysecondsec" id="editId"><div class="rereple"><textarea id="contentInput" name="cmt_content" rows="10" style="height: 70px; width:100%;"></textarea>';	
 	htmls += ' <input class="submitbtn" type="button" value="등록" onclick="replyUpdate('+cmtIdx+',\''+cmtWriter+'\','+sIndex+', '+cmtDate+')"></div></form>';
 	
