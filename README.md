@@ -40,6 +40,10 @@
 </br></br>
 ## 🎈 시연영상
 
+<img src=""/>
+
+![글수정](https://user-images.githubusercontent.com/70254576/113012226-89169a00-91b5-11eb-94d7-f82ad5fcce28.gif)
+![공유 대댓글](https://user-images.githubusercontent.com/70254576/113012236-8b78f400-91b5-11eb-8604-0c9dc9362a61.gif)
 
 
 
