@@ -1,3 +1,7 @@
+![메세지 멤버검색](https://user-images.githubusercontent.com/70254576/113014127-51105680-91b7-11eb-9954-b8ac0d2c6a7e.gif)
+![메세지 채팅](https://user-images.githubusercontent.com/70254576/113014135-52418380-91b7-11eb-90d9-91f7a12f84db.gif)
+![산책리스트](https://user-images.githubusercontent.com/70254576/113014138-5372b080-91b7-11eb-8701-0eb63ae5d2d0.gif)
+![산책참여](https://user-images.githubusercontent.com/70254576/113014143-540b4700-91b7-11eb-91ac-17d6ae092809.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-pink.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -40,8 +44,28 @@
 </br></br>
 ## 🎈 시연영상
 
-<img src="https://user-images.githubusercontent.com/70254576/113012226-89169a00-91b5-11eb-94d7-f82ad5fcce28.gif" style="margin-left:100px;"/>
-<img src="https://user-images.githubusercontent.com/70254576/113012236-8b78f400-91b5-11eb-8604-0c9dc9362a61.gif" style="margin-left:100px;"/>
+
+
+![산책카카오톡전송](https://user-images.githubusercontent.com/70254576/113014177-5bcaeb80-91b7-11eb-8276-64e6ad9f246b.gif)
+![이메일 비번 찾기](https://user-images.githubusercontent.com/70254576/113014184-5c638200-91b7-11eb-83e3-fb29eb2cb4d3.gif)
+![정보수정 ](https://user-images.githubusercontent.com/70254576/113014188-5cfc1880-91b7-11eb-956e-db19130c092a.gif)
+![팔로우 팔로잉](https://user-images.githubusercontent.com/70254576/113014195-5e2d4580-91b7-11eb-8103-ff00073fa165.gif)
+![회원가입 로그인](https://user-images.githubusercontent.com/70254576/113014201-5ff70900-91b7-11eb-90ab-c553fc632228.gif)
+![후기작성(산책)](https://user-images.githubusercontent.com/70254576/113014213-61283600-91b7-11eb-9b16-3f340e321a8c.gif)
+![관리자 문의답변](https://user-images.githubusercontent.com/70254576/113014224-62596300-91b7-11eb-8739-a002fc590c03.gif)
+![관리자 상품등록](https://user-images.githubusercontent.com/70254576/113014226-62f1f980-91b7-11eb-9fe2-8a07febbf7e7.gif)
+![관리자 회원탈퇴](https://user-images.githubusercontent.com/70254576/113014238-64bbbd00-91b7-11eb-984a-95734a068577.gif)
+![관리자 포인트지급](https://user-images.githubusercontent.com/70254576/113014242-65545380-91b7-11eb-9a67-6962bae4ad68.gif)
+![메세지 멤버검색](https://user-images.githubusercontent.com/70254576/113014245-65ecea00-91b7-11eb-8b2c-75e13dc5587b.gif)
+![메세지 채팅](https://user-images.githubusercontent.com/70254576/113014251-66858080-91b7-11eb-83eb-57591ad3a0ff.gif)
+![산책리스트](https://user-images.githubusercontent.com/70254576/113014254-671e1700-91b7-11eb-8a6f-2eac165839ab.gif)
+![산책참여](https://user-images.githubusercontent.com/70254576/113014258-684f4400-91b7-11eb-9ded-5548ef757460.gif)
+
+![검색](https://user-images.githubusercontent.com/70254576/113014384-8026c800-91b7-11eb-8943-91e46f8ae5e7.gif)
+![공유 대댓글](https://user-images.githubusercontent.com/70254576/113014392-8157f500-91b7-11eb-8b46-431d12d33b53.gif)
+![글수정](https://user-images.githubusercontent.com/70254576/113014400-82892200-91b7-11eb-8a09-2177aebeb52e.gif)
+![글작성](https://user-images.githubusercontent.com/70254576/113014411-83ba4f00-91b7-11eb-9225-9c5605bfb44a.gif)
+![답변](https://user-images.githubusercontent.com/70254576/113014414-8452e580-91b7-11eb-93b9-9ea97179216d.gif)
 
 
 
