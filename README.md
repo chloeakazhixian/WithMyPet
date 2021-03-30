@@ -40,8 +40,8 @@
 </br></br>
 ## 🎈 시연영상
 
-<img src="https://user-images.githubusercontent.com/70254576/113012226-89169a00-91b5-11eb-94d7-f82ad5fcce28.gif" style="margin-left:20%;"/>
-<img src="https://user-images.githubusercontent.com/70254576/113012236-8b78f400-91b5-11eb-8604-0c9dc9362a61.gif" style="margin-left:20%;"/>
+<img src="https://user-images.githubusercontent.com/70254576/113012226-89169a00-91b5-11eb-94d7-f82ad5fcce28.gif" style="margin-left:100px;"/>
+<img src="https://user-images.githubusercontent.com/70254576/113012236-8b78f400-91b5-11eb-8604-0c9dc9362a61.gif" style="margin-left:100px;"/>
 
 
 
